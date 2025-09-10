@@ -1,4 +1,4 @@
-<img src="res/SoundBox.png" width="64" title="SoundBoxLogo" align="center">
+<img src="res/SoundBox.png" width="64" title="SoundBoxLogo">
 
 # SoundBox
 A soundboard made with nodejs.
