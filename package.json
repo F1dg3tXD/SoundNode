@@ -1,14 +1,32 @@
 {
   "name": "SoundBox",
+  "version": "0.0.1a",
+  "description": "A desktop soundboard app.",
+  "author": "F1dg3t",
   "main": "main.js",
   "scripts": {
     "start": "node server.js",
-    "electron:start": "electron ."
+    "electron:start": "electron .",
+    "dist": "electron-builder"
   },
   "dependencies": {
     "express": "^5.1.0"
   },
   "devDependencies": {
-    "electron": "^38.0.0"
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12",
+    "electron-packager": "^17.1.2"
+  },
+  "build": {
+    "appId": "com.f1dg3t.soundbox",
+    "mac": {
+      "icon": "res/SoundBox.icns"
+    },
+    "win": {
+      "icon": "res/SoundBox.png"
+    },
+    "linux": {
+      "icon": "res/SoundBox.png"
+    }
   }
 }
