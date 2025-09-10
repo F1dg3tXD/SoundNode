@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Audio Output Device</title>
+  <style>
+    body { font-family: sans-serif; background: #222; color: #fff; margin: 0; padding: 2em; }
+    h2 { margin-top: 0; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 0.5em 0; }
+    button { padding: 0.5em 1em; font-size: 1em; background: #444; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #666; }
+  </style>
+</head>
+<body>
+  <h2>Select Audio Output Device</h2>
+  <ul id="device-list"></ul>
+  <script>
+    async function listDevices() {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const audioOutputs = devices.filter(d => d.kind === 'audiooutput');
+      const ul = document.getElementById('device-list');
+      ul.innerHTML = '';
+      audioOutputs.forEach(device => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.textContent = device.label || device.deviceId;
+        btn.onclick = () => {
+          if (window.deviceSelector && window.deviceSelector.selectDevice) {
+            window.deviceSelector.selectDevice(device.deviceId);
+          }
+        };
+        li.appendChild(btn);
+        ul.appendChild(li);
+      });
+    }
+    listDevices();
+  </script>
+</body>
+</html>
