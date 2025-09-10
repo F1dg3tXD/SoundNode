@@ -3,20 +3,26 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 
-app.use(express.static(__dirname)); // <-- Add this line
+// Serve the static web app from the `static` folder
+app.use(express.static(path.join(__dirname, 'static')));
 
-app.use('/sounds', express.static(path.join(__dirname, 'sounds')));
+// Serve sounds from static/sounds
+app.use('/sounds', express.static(path.join(__dirname, 'static', 'sounds')));
 
 app.get('/api/sounds', (req, res) => {
-    const soundsDir = path.join(__dirname, 'sounds');
+    const soundsDir = path.join(__dirname, 'static', 'sounds');
     fs.readdir(soundsDir, (err, files) => {
         if (err) return res.status(500).json({ error: 'Failed to read sounds folder' });
-        // Filter for common audio file extensions
         const soundFiles = files.filter(f => /\.(mp3|wav|ogg|m4a)$/i.test(f));
         res.json(soundFiles);
     });
 });
 
-app.listen(3000, () => {
-    console.log('Server running on http://localhost:3000');
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'static', 'index.html'));
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });
